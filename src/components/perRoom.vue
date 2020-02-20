@@ -6,9 +6,10 @@
 </template>
 
 <script>
+// import axios from "axios";
 export default {
-  name: 'perroom',
-  props: ['detailroom'],
+  name: "perroom",
+  props: ["detailroom"],
   methods: {
     joinRoom() {
       //   let roomname = detailroom.name
@@ -16,15 +17,15 @@ export default {
 
       let objJR = {
         roomname: this.detailroom.roomname,
-        userId: localStorage.getItem('userId')
-      }
-      //   console.log(objJR.roomname, "<<<<< ");
-      let roomnamenya = this.detailroom.roomname
-      this.$socket.emit('createRoom', roomnamenya)
-      this.$store.dispatch('joinRoom', objJR)
-    }
+        userId: localStorage.getItem("userId")
+      };
+      let roomnamenya = this.detailroom.roomname;
+      this.$socket.emit("createRoom", roomnamenya);
+      this.$store.dispatch("joinRoom", objJR);
+    },
+    getRoomDetail() {}
   }
-}
+};
 </script>
 
 <style></style>

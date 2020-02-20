@@ -47,7 +47,7 @@ export default {
     createUser() {
       let name = this.name;
       this.$store.dispatch("createUser", name);
-      this.$router.push("/rooms");
+      // this.$router.push("/rooms");
     }
   }
 };
