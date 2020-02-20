@@ -3,7 +3,7 @@
     <Background class="background-sendiri" />
     <!-- Kalo scorenya >= 10 -->
     <!-- NOICE -->
-    <div class="mt-5" v-if="score == null">
+    <div class="mt-5" v-if="score >= 10">
       <b-card
         class="d-flex justify-content-center mx-auto animated bounceInDown"
         style="width: 50%;"
@@ -28,6 +28,7 @@
         <b-btn
           variant="warning"
           class="font-weight-bold btn-gerak animated fadeIn delay-1s"
+          @click="toLobby"
           >Another Round!</b-btn
         >
       </div>
@@ -54,6 +55,7 @@
         <b-btn
           variant="warning"
           class="font-weight-bold btn-gerak animated fadeIn delay-1s"
+          @click="toLobby"
           >Try Again</b-btn
         >
       </div>
@@ -71,6 +73,12 @@ export default {
   computed: {
     score() {
       return this.$store.state.userScore
+    }
+  },
+  methods: {
+    toLobby() {
+      this.$store.state.userScore = null
+      this.$router.push('/lobby')
     }
   }
 }
