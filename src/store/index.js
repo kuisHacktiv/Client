@@ -22,12 +22,23 @@ export default new Vuex.Store({
         url: `${this.state.baseUrl}/soals`
       })
         .then(({ data }) => {
-          console.log(data, '<< ini soal')
-          context.commit('setAllSoal', data)
+          // console.log(data, '<< ini soal')
+          // context.commit('setAllSoal', data)
+          // console.log(data, "<< ini soal")
+          context.commit("setAllSoal", data)
         })
         .catch((err) => {
           console.log(err.response)
         })
+    },
+    createRoom(context, objCR) {
+      let { userId, roomname }
+      axios({
+        method: "POST",
+        data: {
+
+        }
+      })
     }
   },
   modules: {}

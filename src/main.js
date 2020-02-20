@@ -11,6 +11,7 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
 Vue.config.productionTip = false
+Vue.prototype.$socket = io.connect("http://localhost:3000")
 
 new Vue({
   router,
