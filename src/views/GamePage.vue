@@ -6,9 +6,9 @@
       </div>
     </div>
     <div class="row">
-      {{randomSoal}}
+      {{ randomSoal }}
       <div class="col-10">
-        <h1>{{randomSoal.soal}}</h1>
+        <h1>{{ randomSoal.soal }}</h1>
       </div>
       <h1 class="col-2" v-text="score"></h1>
     </div>
@@ -25,71 +25,70 @@
 
 <script>
 export default {
-  name: "gamePage",
+  name: 'gamePage',
   data() {
     return {
       currentSoal: [],
       randomIndexnya: null,
       score: 0,
       jumlahSoal: 0
-    };
+    }
   },
   methods: {
     getSoals() {
-      this.$store.dispatch("getSoals");
+      this.$store.dispatch('getSoals')
     },
     randomIndex() {
-      let indexRandom = Math.floor(Math.random() * this.allSoal.length);
-      this.randomIndexnya = indexRandom;
+      let indexRandom = Math.floor(Math.random() * this.allSoal.length)
+      this.randomIndexnya = indexRandom
     },
     cekJawab(jawaban) {
-      console.log(this.randomSoal, "<<");
+      console.log(this.randomSoal, '<<')
       console.log(
         jawaban,
-        "<< ini jawaban user",
+        '<< ini jawaban user',
         this.randomSoal.jawab,
-        "<< ini jawaban asli"
-      );
+        '<< ini jawaban asli'
+      )
       if (jawaban == this.randomSoal.jawab) {
-        console.log("masuk benar");
-        this.score += 1;
+        console.log('masuk benar')
+        this.score += 1
       } else if (jawaban !== this.randomSoal.jawab) {
-        console.log("masuk salah");
-        this.score -= 1;
+        console.log('masuk salah')
+        this.score -= 1
       }
-      this.randomIndex();
+      this.randomIndex()
     }
   },
   mounted() {
-    this.getSoals();
-    this.randomIndex();
+    this.getSoals()
+    this.randomIndex()
   },
   computed: {
     allSoal() {
-      return this.$store.state.allSoals;
+      return this.$store.state.allSoals
     },
     randomSoal() {
-      let i = this.randomIndexnya;
-      return this.allSoal[i];
+      let i = this.randomIndexnya
+      return this.allSoal[i]
     },
     jumlahSoalnya() {
-      return this.jumlahSoal;
+      return this.jumlahSoal
     }
   },
   watch: {
     randomSoal(oldVal, newVal) {
       if (oldVal !== newVal) {
-        this.jumlahSoal += 1;
+        this.jumlahSoal += 1
       }
     },
     jumlahSoalnya() {
       if (this.jumlahSoalnya > 10) {
-        this.$router.push("/winlose");
+        this.$router.push('/winlose')
       }
     }
   }
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>
