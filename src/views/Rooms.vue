@@ -18,16 +18,21 @@
           </b-form>
         </div>
       </b-card>
+      <div class="row d-flex">
+        <perRoom v-for="(oneRoom, i) in semuaRoom" :key="i" :detailroom="oneRoom"></perRoom>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import Background from "../components/Background";
+import perRoom from "../components/perRoom";
 export default {
   name: "rooms",
   components: {
-    Background
+    Background,
+    perRoom
   },
   data() {
     return {
@@ -40,11 +45,30 @@ export default {
       this.$socket.emit("createRoom", roomname);
       let objCR = {
         userId: localStorage.getItem("userId"),
-        roomname: this.roomname
+        roomname: this.roomname,
+        name: localStorage.getItem("name")
       };
       this.$store.dispatch("createRoom", objCR);
+    },
+    getAllRoom() {
+      this.$store.dispatch("getAllRooms");
+    }
+  },
+  mounted() {
+    this.getAllRoom();
+  },
+  computed: {
+    semuaRoom() {
+      return this.$store.state.allRooms;
     }
   }
+  // watch: {
+  //   semuaRoom(oldVal, newVal) {
+  //     if (oldVal == newVal) {
+  //       this.getAllRoom();
+  //     }
+  //   }
+  // }
 };
 </script>
 
