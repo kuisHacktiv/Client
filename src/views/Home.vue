@@ -1,16 +1,11 @@
 <template>
   <div class="home d-flex flex-column">
     <Background class="background-sendiri" />
-    <b-card
-      class="text-center mx-auto shadow-lg bg-dewe"
-      style="width: 40%; margin-top:10%;"
-    >
+    <b-card class="text-center mx-auto shadow-lg bg-dewe" style="width: 40%; margin-top:10%;">
       <h2
         class="animated tada font-weight-bold text-white"
         style="font-family: 'Arvo', serif; font-size:5rem;"
-      >
-        Hacktiv Kuis
-      </h2>
+      >Hacktiv Kuis</h2>
     </b-card>
     <b-card
       class="d-flex align-content-center align-items-center align-middle animated rubberBand"
@@ -20,20 +15,10 @@
         <h2 class="text-center font-weight-bold">Let's Get Started!</h2>
         <b-form class="flex-column" @submit.prevent="startGame">
           <b-form-group class="mt-3" description="Insert your name here">
-            <b-form-input
-              type="text"
-              v-model="name"
-              required
-              placeholder="Name"
-            ></b-form-input>
+            <b-form-input type="text" v-model="name" required placeholder="Name"></b-form-input>
           </b-form-group>
           <div class="d-flex justify-content-center">
-            <b-btn
-              type="submit"
-              class="btn-dewe font-weight-bold"
-              variant="primary"
-              >Start Now!</b-btn
-            >
+            <b-btn type="submit" class="btn-dewe font-weight-bold" variant="primary">Start Now!</b-btn>
           </div>
         </b-form>
       </div>
@@ -42,24 +27,30 @@
 </template>
 
 <script>
-import Background from '../components/Background'
+import Background from "../components/Background";
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     Background
   },
   data() {
     return {
       name: null
-    }
+    };
   },
   methods: {
     startGame() {
-      localStorage.setItem('name', this.name)
-      this.$router.push('/game')
+      localStorage.setItem("name", this.name);
+      this.createUser();
+      // this.$router.push("/game");
+    },
+    createUser() {
+      let name = this.name;
+      this.$store.dispatch("createUser", name);
+      this.$router.push("/rooms");
     }
   }
-}
+};
 </script>
 
 <style scoped>

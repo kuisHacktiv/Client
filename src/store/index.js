@@ -1,18 +1,27 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-
+// import router from "../router"
+// import router from "@/router"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     allSoals: [],
     baseUrl: 'http://localhost:3000',
-    userScore: null
+    userScore: null,
+    dummy: "",
+    allRooms: []
   },
   mutations: {
     setAllSoal(state, soals) {
       state.allSoals = soals
+    },
+    dummy(state, dummy) {
+      state.dummy = dummy
+    },
+    setAllRooms(state, data) {
+      state.allRooms = data
     }
   },
   actions: {
@@ -22,10 +31,79 @@ export default new Vuex.Store({
         url: `${this.state.baseUrl}/soals`
       })
         .then(({ data }) => {
-          console.log(data, '<< ini soal')
-          context.commit('setAllSoal', data)
+          // console.log(data, '<< ini soal')
+          // context.commit('setAllSoal', data)
+          // console.log(data, "<< ini soal")
+          context.commit("setAllSoal", data)
         })
         .catch((err) => {
+          console.log(err.response)
+        })
+    },
+    createRoom(context, objCR) {
+      let { userId, roomname, name } = objCR
+      axios({
+        method: "POST",
+        data: {
+          name,
+          userId,
+          roomname
+        },
+        url: `${this.state.baseUrl}/rooms`
+      })
+        .then(({ data }) => {
+          console.log(data)
+          // context.commit("dummy", "dummy")
+          // router.push("/rooms")
+          context.dispatch("getAllRooms")
+        })
+        .catch(err => {
+          console.log(err.response)
+        })
+    },
+    getAllRooms(context) {
+      axios({
+        method: "GET",
+        url: `${this.state.baseUrl}/rooms`
+      })
+        .then(({ data }) => {
+          console.log(data, "<<")
+          context.commit("setAllRooms", data)
+        })
+        .catch(err => {
+          console.log(err.response)
+        })
+    },
+    createUser(context, username) {
+      axios({
+        method: "POST",
+        url: `${this.state.baseUrl}/users`,
+        data: {
+          name: username
+        }
+      })
+        .then(({ data }) => {
+          console.log(data)
+          localStorage.setItem("userId", data.id)
+          context.commit("dummy", "dummy")
+        })
+    },
+    joinRoom(context, objCR) {
+      let { roomname, userId } = objCR
+      console.log(roomname, "<< ini roomnam")
+      axios({
+        method: "POST",
+        url: `${this.state.baseUrl}/join`,
+        data: {
+          roomname,
+          userId
+        }
+      })
+        .then(({ data }) => {
+          console.log(data, "<< ni dari join")
+          context.commit("dummy", "dummy")
+        })
+        .catch(err => {
           console.log(err.response)
         })
     }
