@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import GamePage from "../views/GamePage"
-import WinLoser from "../views/winLose"
+import GamePage from '../views/GamePage'
+import WinLoser from '../views/winLose'
 
 Vue.use(VueRouter)
 
@@ -13,13 +13,13 @@ const routes = [
     component: Home
   },
   {
-    path: "/game",
-    name: "Game",
+    path: '/game',
+    name: 'Game',
     component: GamePage
   },
   {
-    path: "/winlose",
-    name: "winlose",
+    path: '/winlose',
+    name: 'winlose',
     component: WinLoser
   }
 ]

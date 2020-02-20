@@ -18,16 +18,20 @@
     >
       <div class="animated fadeIn delay-1s">
         <h2 class="text-center font-weight-bold">Let's Get Started!</h2>
-        <b-form class="flex-column">
+        <b-form class="flex-column" @submit.prevent="startGame">
           <b-form-group class="mt-3" description="Insert your name here">
             <b-form-input
               type="text"
+              v-model="name"
               required
               placeholder="Name"
             ></b-form-input>
           </b-form-group>
           <div class="d-flex justify-content-center">
-            <b-btn class="btn-dewe font-weight-bold" variant="primary"
+            <b-btn
+              type="submit"
+              class="btn-dewe font-weight-bold"
+              variant="primary"
               >Start Now!</b-btn
             >
           </div>
@@ -43,6 +47,17 @@ export default {
   name: 'Home',
   components: {
     Background
+  },
+  data() {
+    return {
+      name: null
+    }
+  },
+  methods: {
+    startGame() {
+      localStorage.setItem('name', this.name)
+      this.$router.push('/game')
+    }
   }
 }
 </script>
