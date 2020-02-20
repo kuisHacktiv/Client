@@ -119,6 +119,9 @@ export default {
     jumlahSoalnya() {
       if (this.jumlahSoalnya > 10) {
         this.$router.push('/winlose')
+        // emit biar menang
+        //  terus store score nya
+        this.$store.state.userScore = this.score
       }
     }
   }
