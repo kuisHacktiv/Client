@@ -1,17 +1,14 @@
 <template>
-  <div class="col-3">
-    <b-card :title="detailroom.roomname" sub-title="Card subtitle">
-      <div class="btn btn-primary" @click="joinRoom">Join Room</div>
-
-      <b-card-text>A second paragraph of text in the card.</b-card-text>
-    </b-card>
-  </div>
+  <b-card class="text-center">
+    <h4 class="border-bottom pb-2">{{ detailroom.roomname }}</h4>
+    <div class="btn btn-primary my-2" @click="joinRoom">Join Room</div>
+  </b-card>
 </template>
 
 <script>
 export default {
-  name: "perroom",
-  props: ["detailroom"],
+  name: 'perroom',
+  props: ['detailroom'],
   methods: {
     joinRoom() {
       //   let roomname = detailroom.name
@@ -19,16 +16,15 @@ export default {
 
       let objJR = {
         roomname: this.detailroom.roomname,
-        userId: localStorage.getItem("userId")
-      };
+        userId: localStorage.getItem('userId')
+      }
       //   console.log(objJR.roomname, "<<<<< ");
-      let roomnamenya = this.detailroom.roomname;
-      this.$socket.emit("createRoom", roomnamenya);
-      this.$store.dispatch("joinRoom", objJR);
+      let roomnamenya = this.detailroom.roomname
+      this.$socket.emit('createRoom', roomnamenya)
+      this.$store.dispatch('joinRoom', objJR)
     }
   }
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>
