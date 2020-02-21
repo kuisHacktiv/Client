@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import ducktales from '../assets/ducktales.mp3'
 import Background from '../components/Background'
 import perRoom from '../components/perRoom'
 export default {
@@ -53,7 +54,8 @@ export default {
   },
   data() {
     return {
-      roomname: ''
+      roomname: '',
+      sound: new Audio(ducktales)
     }
   },
   methods: {
@@ -74,11 +76,17 @@ export default {
     }
   },
   mounted() {
+    this.sound.play()
     this.getAllRoom()
+    let audio = new Audio(megalovania)
+    audio.pause()
     this.$socket.on('fetchRoomUlang', () => {
       console.log('masuk emitanny fetchRoomUlang')
       this.getAllRoom()
     })
+  },
+  beforeDestroy() {
+    this.audio.pause()
   },
   computed: {
     semuaRoom() {

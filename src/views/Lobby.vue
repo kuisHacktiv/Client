@@ -14,15 +14,6 @@ export default {
   components: {
     BoxPlayer,
     Background
-  },
-  created() {
-    this.$store.dispatch('GET_ROOMS_USERS', this.$route.params.name)
-  },
-  mounted() {
-    this.$socket.on('joined', (roomname) => {
-      console.log(roomname, 'nama room')
-      this.$store.dispatch('GET_ROOMS_USERS', this.$route.params.name)
-    })
   }
 }
 </script>
