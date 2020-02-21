@@ -87,7 +87,7 @@ export default {
       } else if (jawaban !== this.randomSoal.jawab) {
         this.show = false;
         console.log("masuk salah");
-        this.score -= 1;
+        // this.score -= 1;
       }
       this.show = true;
       this.randomIndex();
@@ -96,10 +96,13 @@ export default {
   mounted() {
     this.getSoals();
     this.randomIndex();
-    this.$socket.on("changeIndex", index => {
-      console.log("masuk  mounted");
-      this.randomIndexnya = index;
+    this.$socket.on("gameover", () => {
+      this.$router.push("/winlose");
     });
+    // this.$socket.on("changeIndex", index => {
+    //   console.log("masuk  mounted");
+    //   this.randomIndexnya = index;
+    // });
   },
   computed: {
     allSoal() {
@@ -120,8 +123,9 @@ export default {
       }
     },
     jumlahSoalnya() {
-      if (this.jumlahSoalnya > 10) {
-        this.$router.push("/winlose");
+      if (this.score > 5) {
+        this.$socket.emit("adayangmenang");
+        // this.$router.push("/winlose");
         // emit biar menang
         //  terus store score nya
         this.$store.state.userScore = this.score;
