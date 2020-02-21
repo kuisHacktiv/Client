@@ -96,7 +96,7 @@ export default new Vuex.Store({
     },
     joinRoom(context, objCR) {
       let { roomname, userId } = objCR
-      axios({
+      return axios({
         method: 'POST',
         url: `${this.state.baseUrl}/join`,
         data: {

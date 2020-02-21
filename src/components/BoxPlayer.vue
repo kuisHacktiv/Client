@@ -11,11 +11,11 @@
       <b-card
         class="d-flex mx-auto bg-custome col-5 mx-auto my-2 animated zoomInDown"
         v-for="i in users"
-        :key="i"
+        :key="i.id"
       >
         <div class="border-bottom w-100 text-dark">
-          <pre>{{ i }}</pre>
-          <!-- <h5 class="text text-center font-weight-bold">{{ i }}</h5> -->
+          <!-- <pre>{{ i }}</pre> -->
+          <h5 class="text text-center font-weight-bold">{{ i.User.name }}</h5>
         </div>
         <div class="card-body d-flex">
           <img
@@ -28,7 +28,7 @@
       </b-card>
       <!-- end card -->
     </div>
-    <div class="d-flex justify-content-center mb-3">
+    <div class="d-flex justify-content-center mb-3" v-if="users.length == 4">
       <b-button
         @click="startGame"
         class="font-weight-bold btn-gerak animated fadeIn"
@@ -36,6 +36,11 @@
         >START!</b-button
       >
     </div>
+
+    <b-card class="text-center mx-auto" style="width:30%;" v-else>
+      <b-spinner small type="grow"></b-spinner>
+      Waiting ...
+    </b-card>
   </div>
 </template>
 

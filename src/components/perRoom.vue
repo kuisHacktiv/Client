@@ -4,7 +4,7 @@
     <div v-if="jumlahMember < 4" class="btn btn-primary my-2" @click="joinRoom">
       Join Room
     </div>
-    <b-button v-else disabled>Join Room</b-button>
+    <div v-else disabled>Join Room</div>
   </b-card>
 </template>
 
@@ -29,8 +29,9 @@ export default {
         username: localStorage.name
       }
       let roomnamenya = this.detailroom.roomname
-      this.$socket.emit('joinRoom', roomnamenya)
-      this.$store.dispatch('joinRoom', objJR)
+      this.$store.dispatch('joinRoom', objJR).then(() => {
+        this.$socket.emit('joinRoom', roomnamenya)
+      })
       this.$router.push(`/${roomnamenya}/lobby`)
     },
     getRoomDetail() {
