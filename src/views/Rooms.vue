@@ -49,13 +49,14 @@ export default {
   methods: {
     createRoom() {
       let roomname = this.roomname;
-      this.$socket.emit("createRoom", roomname);
       let objCR = {
         userId: localStorage.getItem("userId"),
         roomname: this.roomname,
         name: localStorage.getItem("name")
       };
-      this.$store.dispatch("createRoom", objCR);
+      this.$store.dispatch("createRoom", objCR).then(() => {
+        this.$socket.emit("createRoom", roomname);
+      });
     },
     getAllRoom() {
       this.$store.dispatch("getAllRooms");
@@ -64,12 +65,13 @@ export default {
   mounted() {
     this.getAllRoom();
     this.$socket.on("fetchRoomUlang", () => {
-      console.log("masuk emitanny");
+      console.log("masuk emitanny fetchRoomUlang");
       this.getAllRoom();
     });
   },
   computed: {
     semuaRoom() {
+      console.log("list rooms updated", this.$store.state.allRooms);
       return this.$store.state.allRooms;
     }
   }

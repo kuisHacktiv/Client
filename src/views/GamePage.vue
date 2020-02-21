@@ -73,20 +73,20 @@ export default {
       this.$socket.emit("randomIndex", indexRandom);
     },
     cekJawab(jawaban) {
-      console.log(this.randomSoal, "<<");
-      console.log(
-        jawaban,
-        "<< ini jawaban user",
-        this.randomSoal.jawab,
-        "<< ini jawaban asli"
-      );
+      // console.log(this.randomSoal, "<<");
+      // console.log(
+      //   jawaban,
+      //   "<< ini jawaban user",
+      //   this.randomSoal.jawab,
+      //   "<< ini jawaban asli"
+      // );
       if (jawaban == this.randomSoal.jawab) {
         this.show = false;
-        console.log("masuk benar");
+        // console.log("masuk benar");
         this.score += 1;
       } else if (jawaban !== this.randomSoal.jawab) {
         this.show = false;
-        console.log("masuk salah");
+        // console.log("masuk salah");
         // this.score -= 1;
       }
       this.show = true;
@@ -96,13 +96,16 @@ export default {
   mounted() {
     this.getSoals();
     this.randomIndex();
-    this.$socket.on("gameover", () => {
-      this.$router.push("/winlose");
+    let room = this.$route.params.name;
+    this.$socket.on("gameover", menang => {
+      this.$router.push(`/winlose`);
+      this.$store.commit("setwinner", menang);
+      this.$store.state.userScore = this.score;
     });
-    // this.$socket.on("changeIndex", index => {
-    //   console.log("masuk  mounted");
-    //   this.randomIndexnya = index;
-    // });
+    this.$socket.on("changeIndex", index => {
+      console.log("masuk  mounted");
+      this.randomIndexnya = index;
+    });
   },
   computed: {
     allSoal() {
@@ -123,9 +126,13 @@ export default {
       }
     },
     jumlahSoalnya() {
-      if (this.score > 5) {
-        this.$socket.emit("adayangmenang");
-        // this.$router.push("/winlose");
+      if (this.score == 5) {
+        let objMng = {
+          winner: localStorage.getItem("name"),
+          roomname: this.$route.params.name
+        };
+        this.$socket.emit("adayangmenang", objMng);
+        this.$router.push(`/winlose`);
         // emit biar menang
         //  terus store score nya
         this.$store.state.userScore = this.score;

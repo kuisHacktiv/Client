@@ -11,7 +11,8 @@ export default new Vuex.Store({
     baseUrl: 'http://localhost:3000',
     userScore: null,
     dummy: "",
-    allRooms: []
+    allRooms: [],
+    winner: null
   },
   mutations: {
     setAllSoal(state, soals) {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     },
     setAllRooms(state, data) {
       state.allRooms = data
+    },
+    setwinner(state, winner) {
+      state.winner = winner
     }
   },
   actions: {
@@ -39,7 +43,7 @@ export default new Vuex.Store({
     },
     createRoom(context, objCR) {
       let { userId, roomname, name } = objCR
-      axios({
+      return axios({
         method: "POST",
         data: {
           name,
@@ -55,7 +59,8 @@ export default new Vuex.Store({
           context.dispatch("getAllRooms")
         })
         .catch(err => {
-          console.log(err.response)
+          console.log(err, "<<<<<")
+          // console.log(err.response)
         })
     },
     getAllRooms(context) {
@@ -99,7 +104,7 @@ export default new Vuex.Store({
         .then(({ data }) => {
           console.log(data, "<< ni dari join")
           context.commit("dummy", "dummy")
-          router.push(`/lobby/${data.name}`)
+          router.push(`/${data.name}/lobby`)
         })
         .catch(err => {
           console.log(err.response)

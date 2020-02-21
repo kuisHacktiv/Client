@@ -29,28 +29,43 @@
     </div>
     <div class="d-flex justify-content-center mb-3">
       <b-button
+        @click="startGame"
         class="font-weight-bold btn-gerak animated fadeIn"
         variant="primary"
-        >START!</b-button
-      >
+      >START!</b-button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'BoxPlayer',
+  name: "BoxPlayer",
   data() {
     return {
       users: [1, 2, 3, 4]
+    };
+  },
+  methods: {
+    startGame() {
+      let name = this.$route.params.name;
+      this.$socket.emit("ayomulai", name);
+      this.$router.push(`/game/${name}`);
     }
+  },
+  mounted() {
+    let name = this.$route.params.name;
+
+    console.log("masuk mounted lobby");
+    this.$socket.on("letsgo", () => {
+      this.$router.push(`/game/${name}`);
+    });
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-@import url('https://fonts.googleapis.com/css?family=Concert+One&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Concert+One&display=swap");
 .bglobby {
   background-color: rgba(255, 255, 255, 0.2);
 }
