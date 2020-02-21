@@ -14,7 +14,8 @@
         :key="i"
       >
         <div class="border-bottom w-100 text-dark">
-          <h5 class="text text-center font-weight-bold">PLAYER {{ i }}</h5>
+          <pre>{{ i }}</pre>
+          <!-- <h5 class="text text-center font-weight-bold">{{ i }}</h5> -->
         </div>
         <div class="card-body d-flex">
           <img
@@ -32,40 +33,52 @@
         @click="startGame"
         class="font-weight-bold btn-gerak animated fadeIn"
         variant="primary"
-      >START!</b-button>
+        >START!</b-button
+      >
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "BoxPlayer",
+  name: 'BoxPlayer',
   data() {
-    return {
-      users: [1, 2, 3, 4]
-    };
+    return {}
   },
   methods: {
     startGame() {
-      let name = this.$route.params.name;
-      this.$socket.emit("ayomulai", name);
-      this.$router.push(`/game/${name}`);
+      let name = this.$route.params.name
+      this.$socket.emit('ayomulai', name)
+      this.$router.push(`/game/${name}`)
+    }
+  },
+  created() {
+    this.$store.dispatch('GET_ROOMS_USERS', this.$route.params.name)
+    console.log(this.$route)
+  },
+  computed: {
+    users() {
+      return this.$store.state.userList
     }
   },
   mounted() {
-    let name = this.$route.params.name;
+    let name = this.$route.params.name
 
-    console.log("masuk mounted lobby");
-    this.$socket.on("letsgo", () => {
-      this.$router.push(`/game/${name}`);
-    });
+    this.$socket.on('joined', (roomname) => {
+      this.$store.dispatch('GET_ROOMS_USERS', roomname)
+    })
+
+    // console.log("masuk mounted lobby");
+    this.$socket.on('letsgo', () => {
+      this.$router.push(`/game/${name}`)
+    })
   }
-};
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-@import url("https://fonts.googleapis.com/css?family=Concert+One&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Concert+One&display=swap');
 .bglobby {
   background-color: rgba(255, 255, 255, 0.2);
 }
