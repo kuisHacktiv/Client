@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import router from "../router"
-
+import router from '../router'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -10,9 +9,10 @@ export default new Vuex.Store({
     allSoals: [],
     baseUrl: 'http://localhost:3000',
     userScore: null,
-    dummy: "",
+    dummy: '',
     allRooms: [],
-    winner: null
+    winner: null,
+    userList: []
   },
   mutations: {
     setAllSoal(state, soals) {
@@ -26,6 +26,9 @@ export default new Vuex.Store({
     },
     setwinner(state, winner) {
       state.winner = winner
+    },
+    SAVE_ROOMS_USERS(state, data) {
+      state.userList = data
     }
   },
   actions: {
@@ -35,7 +38,7 @@ export default new Vuex.Store({
         url: `${this.state.baseUrl}/soals`
       })
         .then(({ data }) => {
-          context.commit("setAllSoal", data)
+          context.commit('setAllSoal', data)
         })
         .catch((err) => {
           console.log(err.response)
@@ -44,7 +47,7 @@ export default new Vuex.Store({
     createRoom(context, objCR) {
       let { userId, roomname, name } = objCR
       return axios({
-        method: "POST",
+        method: 'POST',
         data: {
           name,
           userId,
@@ -56,45 +59,44 @@ export default new Vuex.Store({
           // console.log(data)
           // context.commit("dummy", "dummy")
           // router.push("/rooms")
-          context.dispatch("getAllRooms")
+          context.dispatch('getAllRooms')
         })
-        .catch(err => {
-          console.log(err, "<<<<<")
+        .catch((err) => {
+          console.log(err, '<<<<<')
           // console.log(err.response)
         })
     },
     getAllRooms(context) {
       axios({
-        method: "GET",
+        method: 'GET',
         url: `${this.state.baseUrl}/rooms`
       })
         .then(({ data }) => {
           // console.log(data, "<<")
-          context.commit("setAllRooms", data)
+          context.commit('setAllRooms', data)
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err.response)
         })
     },
     createUser(context, username) {
       axios({
-        method: "POST",
+        method: 'POST',
         url: `${this.state.baseUrl}/users`,
         data: {
           name: username
         }
+      }).then(({ data }) => {
+        console.log(data)
+        router.push('/rooms')
+        localStorage.setItem('userId', data.id)
+        context.commit('dummy', 'dummy')
       })
-        .then(({ data }) => {
-          // console.log(data)
-          router.push("/rooms")
-          localStorage.setItem("userId", data.id)
-          context.commit("dummy", "dummy")
-        })
     },
     joinRoom(context, objCR) {
       let { roomname, userId } = objCR
-      axios({
-        method: "POST",
+      return axios({
+        method: 'POST',
         url: `${this.state.baseUrl}/join`,
         data: {
           roomname,
@@ -102,11 +104,26 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data, "<< ni dari join")
-          context.commit("dummy", "dummy")
+          console.log(data, '<< ni dari join')
+          context.commit('dummy', 'dummy')
           router.push(`/${data.name}/lobby`)
+          context.dispatch('GET_ROOMS_USERS', objCR.roomname)
         })
-        .catch(err => {
+        .catch((err) => {
+          console.log(err.response)
+        })
+    },
+    GET_ROOMS_USERS({ commit }, roomname) {
+      console.log(roomname)
+      axios({
+        method: 'GET',
+        url: `${this.state.baseUrl}/rooms/${roomname}/users`
+      })
+        .then(({ data }) => {
+          console.log(data)
+          commit('SAVE_ROOMS_USERS', data)
+        })
+        .catch((err) => {
           console.log(err.response)
         })
     }

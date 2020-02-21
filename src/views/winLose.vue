@@ -20,14 +20,17 @@
         class="mx-auto mt-5 animated tada fast delay-1s"
         style="width: 50%; font-family: 'Arvo', serif; font-size:5rem;"
       >
-        <h2 class="text-center animated fadeIn delay-1s">Yeeey! You Are The Winner</h2>
+        <h2 class="text-center animated fadeIn delay-1s">
+          Yeeey! You Are The Winner
+        </h2>
       </b-card>
       <div class="d-flex justify-content-center mt-5">
         <b-btn
           variant="warning"
           class="font-weight-bold btn-gerak animated fadeIn delay-1s"
           @click="toLobby"
-        >Another Round!</b-btn>
+          >Another Round!</b-btn
+        >
       </div>
     </div>
     <!-- Kalo scorenya kurang 10 -->
@@ -53,31 +56,32 @@
           variant="warning"
           class="font-weight-bold btn-gerak animated fadeIn delay-1s"
           @click="toLobby"
-        >Try Again</b-btn>
+          >Try Again</b-btn
+        >
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Background from "../components/Background";
+import Background from '../components/Background'
 export default {
-  name: "winlose",
+  name: 'winlose',
   components: {
     Background
   },
   computed: {
     score() {
-      return this.$store.state.userScore;
+      return this.$store.state.userScore
     }
   },
   methods: {
     toLobby() {
-      this.$store.state.userScore = null;
-      this.$router.push("/rooms");
+      this.$store.state.userScore = null
+      this.$router.push('/rooms')
     }
   }
-};
+}
 </script>
 
 <style scoped>

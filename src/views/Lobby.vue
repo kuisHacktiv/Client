@@ -1,14 +1,13 @@
 <template>
   <div>
-    <Background class="background-sendiri"/>
-    <BoxPlayer style="z-index:1;"/>
+    <Background class="background-sendiri" />
+    <BoxPlayer style="z-index:1;" />
   </div>
-
 </template>
 
 <script>
 import Background from '@/components/Background.vue'
-import BoxPlayer from '@/components/BoxPlayer.vue';
+import BoxPlayer from '@/components/BoxPlayer.vue'
 
 export default {
   name: 'Lobby',
