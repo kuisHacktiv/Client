@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     allSoals: [],
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'https://kuis-hacktiv.herokuapp.com',
     userScore: null,
     dummy: '',
     allRooms: [],

@@ -11,8 +11,8 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
 Vue.config.productionTip = false
-Vue.prototype.$socket = io.connect("http://localhost:3000")
-Vue.prototype.$baseUrl = "http://localhost:3000"
+Vue.prototype.$socket = io.connect('https://kuis-hacktiv.herokuapp.com')
+Vue.prototype.$baseUrl = 'https://kuis-hacktiv.herokuapp.com'
 
 new Vue({
   router,
