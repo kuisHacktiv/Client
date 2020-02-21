@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-// import router from "../router"
-// import router from "@/router"
+import router from "../router"
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -31,9 +31,6 @@ export default new Vuex.Store({
         url: `${this.state.baseUrl}/soals`
       })
         .then(({ data }) => {
-          // console.log(data, '<< ini soal')
-          // context.commit('setAllSoal', data)
-          // console.log(data, "<< ini soal")
           context.commit("setAllSoal", data)
         })
         .catch((err) => {
@@ -52,7 +49,7 @@ export default new Vuex.Store({
         url: `${this.state.baseUrl}/rooms`
       })
         .then(({ data }) => {
-          console.log(data)
+          // console.log(data)
           // context.commit("dummy", "dummy")
           // router.push("/rooms")
           context.dispatch("getAllRooms")
@@ -67,7 +64,7 @@ export default new Vuex.Store({
         url: `${this.state.baseUrl}/rooms`
       })
         .then(({ data }) => {
-          console.log(data, "<<")
+          // console.log(data, "<<")
           context.commit("setAllRooms", data)
         })
         .catch(err => {
@@ -83,14 +80,14 @@ export default new Vuex.Store({
         }
       })
         .then(({ data }) => {
-          console.log(data)
+          // console.log(data)
+          router.push("/rooms")
           localStorage.setItem("userId", data.id)
           context.commit("dummy", "dummy")
         })
     },
     joinRoom(context, objCR) {
       let { roomname, userId } = objCR
-      console.log(roomname, "<< ini roomnam")
       axios({
         method: "POST",
         url: `${this.state.baseUrl}/join`,
@@ -102,6 +99,7 @@ export default new Vuex.Store({
         .then(({ data }) => {
           console.log(data, "<< ni dari join")
           context.commit("dummy", "dummy")
+          router.push(`/lobby/${data.name}`)
         })
         .catch(err => {
           console.log(err.response)
